@@ -1,0 +1,22 @@
+{
+  "name": "invoices-template",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "main": "invoice-template.js",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .js .",
+    "pretest": "npm run lint --silent",
+    "start": "node ./invoice-template.js"
+  },
+  "dependencies": {
+    "pdfkit": "^0.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.1.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.12.0",
+    "pre-commit": "^1.1.3"
+  }
+}

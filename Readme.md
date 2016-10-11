@@ -1,0 +1,1 @@
+This is a template for [osbb/invoices-printing-service](https://github.com/osbb/invoices-printing-service)
