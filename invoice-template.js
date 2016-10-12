@@ -4,7 +4,7 @@ const PDFDocument = require('pdfkit');
 const ukrMonths = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня',
   'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'];
 
-var str =''; // >>> afterwards change to "let" !
+var str = ''; // >>> afterwards change to "let" !
 
 
 // Stream to pipe to the resulting PDF
@@ -27,6 +27,8 @@ const doc = new PDFDocument({
 });
 doc.pipe(upload);
 
+const invoiceDate = new Date();
+
 // Fonts registration. Letters for convenience: є і ї ґ Є І Ї Ґ
 doc.registerFont('regular', 'fonts/NotoSans-Regular.ttf');
 doc.registerFont('italic', 'fonts/NotoSans-Italic.ttf');
@@ -44,7 +46,7 @@ const data = {
   "flatNum": "147",
   "chiefAccounter": "Олена Петрівна Гонтарь"
 };
-data.invoiceDate = new Date();
+
 
 // ======= INVOICE TEMPLATE =======
 // Vertical lines and "Лінія відрізу"
@@ -55,24 +57,24 @@ doc.undash();
 
 doc.fontSize(8);
 doc.font('regular');
-doc.text(`Л`, 340, 70,  { width: 12, align: 'center' });
-doc.text(`і`, 340, 85,  { width: 12, align: 'center' });
-doc.text(`н`, 340, 100, { width: 12, align: 'center' });
-doc.text(`і`, 340, 115, { width: 12, align: 'center' });
-doc.text(`я`, 340, 130, { width: 12, align: 'center' });
-doc.text(`в`, 340, 190, { width: 12, align: 'center' });
-doc.text(`і`, 340, 205, { width: 12, align: 'center' });
-doc.text(`д`, 340, 220, { width: 12, align: 'center' });
-doc.text(`р`, 340, 235, { width: 12, align: 'center' });
-doc.text(`і`, 340, 250, { width: 12, align: 'center' });
-doc.text(`з`, 340, 265, { width: 12, align: 'center' });
-doc.text(`у`, 340, 280, { width: 12, align: 'center' });
+doc.text('Л', 340, 70,  { width: 12, align: 'center' });
+doc.text('і', 340, 85,  { width: 12, align: 'center' });
+doc.text('н', 340, 100, { width: 12, align: 'center' });
+doc.text('і', 340, 115, { width: 12, align: 'center' });
+doc.text('я', 340, 130, { width: 12, align: 'center' });
+doc.text('в', 340, 190, { width: 12, align: 'center' });
+doc.text('і', 340, 205, { width: 12, align: 'center' });
+doc.text('д', 340, 220, { width: 12, align: 'center' });
+doc.text('р', 340, 235, { width: 12, align: 'center' });
+doc.text('і', 340, 250, { width: 12, align: 'center' });
+doc.text('з', 340, 265, { width: 12, align: 'center' });
+doc.text('у', 340, 280, { width: 12, align: 'center' });
 
 
 // >>>>> Left-hand pane <<<<<
 // Section "Ідентифікаційний код ЄДРПОУ"
 doc.fontSize(8);
-str = `Ідентифікаційний код ЄДРПОУ    `;
+str = 'Ідентифікаційний код ЄДРПОУ    ';
 doc.font('regular').text(str, 20, 40, { continued: true });
 doc.font('bold').text(data.codeEDRPOU);
 doc.lineWidth(1);
@@ -98,15 +100,15 @@ doc.font('bold').text(`${data.orderNum}`, { underline: true });
 
 // Subsection "Дата"
 doc.fontSize(8);
-str = `від « ${data.invoiceDate.getDate()} »  ${ukrMonths[data.invoiceDate.getMonth()]} ` +
-  `${data.invoiceDate.getFullYear()} р.`;
+str = `від « ${invoiceDate.getDate()} »  ${ukrMonths[invoiceDate.getMonth()]} ` +
+  `${invoiceDate.getFullYear()} р.`;
 doc.font('regular').text(str, { width: 320, align: 'center' });
 
 // Table 1
 doc.moveDown(1);
 doc.fontSize(8);
-str = 'Кореспонду-\nючий рахунок,\nсубрахунок' + '\nКод аналі-\nтичного\nобліку' +
-  '\nСума\nцифрами' + '\n\nКод цільового\nпризначення';
+str = 'Кореспонду-\nючий рахунок,\nсубрахунок\nКод аналі-\nтичного\nобліку' +
+  '\nСума\nцифрами\n\nКод цільового\nпризначення';
 doc.font('regular').text(str, 23, 148,
   { width: 266, height: 35, align: 'center', columns: 4, columnGap: 0 });
 
@@ -213,8 +215,8 @@ doc.font('bold').text(`${data.orderNum}`, { underline: true });
 
 // Subsection "Дата"
 doc.fontSize(8);
-str = `від « ${data.invoiceDate.getDate()} »  ${ukrMonths[data.invoiceDate.getMonth()]} ` +
-  `${data.invoiceDate.getFullYear()} р.`;
+str = `від « ${invoiceDate.getDate()} »  ${ukrMonths[invoiceDate.getMonth()]} ` +
+  `${invoiceDate.getFullYear()} р.`;
 doc.font('regular').text(str, { width: 223, align: 'center' });
 
 // Section "Прийнято від"
@@ -222,7 +224,7 @@ doc.moveDown(1);
 doc.fontSize(9);
 str = 'Прийнято від ';
 doc.font('bold').text(str, { width: 225, continued: true });
-str = ` ${data.firstName.slice(0,1)}.${data.patronomic.slice(0,1)}. ${data.surname} `;
+str = ` ${data.firstName.slice(0, 1)}.${data.patronomic.slice(0, 1)}. ${data.surname} `;
 doc.font('regular').text(str, { underline: true, continued: true });
 str = ' кв. № ';
 doc.font('regular').text(str, { underline: false, continued: true });
