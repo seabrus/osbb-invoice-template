@@ -256,8 +256,13 @@ function createInvoicePDF(doc, data) {
   doc.fontSize(9);
   str = 'Загальна сума _______________________________________________________________';
   doc.font('bold').text(str, 20, initY + (servicesNum * stepY) + 10);
-  str = '_______________________________________________________________грн._____коп.';
-  doc.font('regular').text(str);
+  doc.font('regular');
+  str = '_______________________________________________________________грн.';
+  doc.text(str, { continued: true });
+  str = ` ${String(totalSum.toFixed(2).slice(-2))} `;
+  doc.text(str, { underline: true, continued: true });
+  str = ' коп.';
+  doc.text(str, { underline: false });
 
   doc.moveDown(0.1);
   doc.fontSize(7);
@@ -374,12 +379,16 @@ function createInvoicePDF(doc, data) {
   str = 'Загальна сума ______________________________________';
   doc.font('bold').text(str, 357, initYR + (servicesNum * stepYR) + 30);
   doc.moveDown(0.1);
-  doc.fontSize(7);
+  doc.font('regular').fontSize(7);
   str = '(словами)';
-  doc.font('regular').text(str, { width: 223, align: 'center' });
+  doc.text(str, { width: 223, align: 'center' });
   doc.fontSize(9);
-  str = '________________________________________грн._____коп.';
-  doc.font('regular').text(str);
+  str = '________________________________________грн.';
+  doc.text(str, { continued: true });
+  str = ` ${String(totalSum.toFixed(2).slice(-2))} `;
+  doc.text(str, { underline: true, continued: true });
+  str = ' коп.';
+  doc.text(str, { underline: false });
 
   // Section "М.П."
   doc.moveDown(2);
