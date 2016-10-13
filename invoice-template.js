@@ -91,14 +91,14 @@ function createInvoicePDF(doc, data) {
   const flatNum = data.flatNum || '000';
   const chiefAccounter = data.chiefAccounter || 'Головний бухгалтер';
   const services = data.services || [];
-  if (services.length === 0 ) {
+  if (services.length === 0) {
     services[0] =
       { name: '', shortName: '', nastupPokaznik: 0, poperedPokaznik: 0, riznitsa: 0, summa: 0 };
   }
   const servicesNum = services.length;
   for (var k = 0; k < servicesNum; k++) {
-    if (!services[k].name) services[k].name = '?';
-    if (!services[k].shortName) services[k].shortName = '?';
+    if (!services[k].name) services[k].name = '???';
+    if (!services[k].shortName) services[k].shortName = '???';
     if (!services[k].tarif) services[k].tarif = 0;
     if (!services[k].nastupPokaznik) services[k].nastupPokaznik = 0;
     if (!services[k].poperedPokaznik) services[k].poperedPokaznik = 0;
@@ -218,7 +218,7 @@ function createInvoicePDF(doc, data) {
   const initY = 255;
   doc.moveTo(20, initY).lineTo(330, initY).stroke();
   for (var k = 0, currentY = 0; k < servicesNum; k++) {
-    currentY = initY + (k + 1 ) * stepY;
+    currentY = initY + (k + 1) * stepY;
     doc.moveTo(20, currentY).lineTo(330, currentY).stroke();
   }
 
@@ -332,7 +332,7 @@ function createInvoicePDF(doc, data) {
   const initYR = 175;
   doc.moveTo(357, initYR).lineTo(580, initYR).stroke();
   for (var k = 0, currentY = 0; k < servicesNum; k++) {
-    currentY = initYR + (k + 1 ) * stepYR;
+    currentY = initYR + (k + 1) * stepYR;
     doc.moveTo(357, currentY).lineTo(580, currentY).stroke();
   }
 
