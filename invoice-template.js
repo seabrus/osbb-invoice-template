@@ -90,21 +90,20 @@ function createInvoicePDF(doc, data) {
   const surname = data.surname || 'По-батьковi';
   const flatNum = data.flatNum || '000';
   const chiefAccounter = data.chiefAccounter || 'Головний бухгалтер';
-  var services = data.services || [];
+  const services = data.services || [];
   if (services.length === 0 ) {
-    services = [
-      { name: '', shortName: '', nastupPokaznik: 0, poperedPokaznik: 0, riznitsa: 0, summa: 0 }
-    ];
+    services[0] =
+      { name: '', shortName: '', nastupPokaznik: 0, poperedPokaznik: 0, riznitsa: 0, summa: 0 };
   }
   const servicesNum = services.length;
   for (var k = 0; k < servicesNum; k++) {
-    if (!services.name) services.name = '?';
-    if (!services.shortName) services.shortName = '?';
-    if (!services.tarif) services.tarif = 0;
-    if (!services.nastupPokaznik) services.nastupPokaznik = 0;
-    if (!services.poperedPokaznik) services.poperedPokaznik = 0;
-    if (!services.riznitsa) services.riznitsa = 0;
-    if (!services.summa || !parseFloat(services.summa)) services.summa = 0;
+    if (!services[k].name) services[k].name = '?';
+    if (!services[k].shortName) services[k].shortName = '?';
+    if (!services[k].tarif) services[k].tarif = 0;
+    if (!services[k].nastupPokaznik) services[k].nastupPokaznik = 0;
+    if (!services[k].poperedPokaznik) services[k].poperedPokaznik = 0;
+    if (!services[k].riznitsa) services[k].riznitsa = 0;
+    if (!services[k].summa || !parseFloat(services[k].summa)) services[k].summa = 0;
   }
 
   // The invoice date
