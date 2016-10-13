@@ -9,6 +9,7 @@
     "start": "node ./invoice-template.js"
   },
   "dependencies": {
+    "moment": "^2.15.1",
     "pdfkit": "^0.8.0"
   }
 }
