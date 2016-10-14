@@ -9,6 +9,8 @@
     "start": "node ./invoice-template.js"
   },
   "dependencies": {
+    "i18next": "^3.4.3",
+    "i18next-sync-fs-backend": "^0.1.0",
     "moment": "^2.15.1",
     "pdfkit": "^0.8.0"
   }

@@ -11,14 +11,14 @@ function subNum(numStr, start, len) {
  * @param {String} num - The number to convert
  * @returns string
  */
-function num2str(num) {
+module.exports = function (num) {
   // Locale
   const NOL = 'нуль';
   const ODIN = 'один';
   const ODNA = 'одна';
   const DVA = 'два';
   const DVI = 'дві';
-  const W = [
+  const WORDS = [
     ['', '', '', '', 'тисяч', 'мілліонов', 'мільярдів'],
     ['одна', 'одинадцять', 'десять', 'сто', 'тисяча', 'мілліон', 'мільярд'],
     ['дві', 'дванадцять', 'двадцять', 'двісті', 'тисячі', 'мілліона', 'мільярда'],
@@ -55,31 +55,28 @@ function num2str(num) {
     units = '';
     tens = '';
     if (subNum(numStr, i + 2, 2) > 10 && subNum(numStr, i + 2, 2) < 20) {
-      units = ` ${W[subNum(numStr, i + 1, 1)][1]} ${W[0][i / 3 + 3]}`;
+      units = ` ${WORDS[subNum(numStr, i + 1, 1)][1]} ${WORDS[0][i / 3 + 3]}`;
     } else {
-      units = W[subNum(numStr, i + 1, 1)][0];
+      units = WORDS[subNum(numStr, i + 1, 1)][0];
       if (units === ODIN && i === 3) units = ODNA;
       if (units === DVA && i === 3) units = DVI;
-      if (!(i === 0 && units !== '')) units += ` ${W[subNum(numStr, i + 1, 1)][i / 3 + 3]}`;
-      if (units === ' ') {
-        units = '';
-      } else if (units !== ` ${W[subNum(numStr, i + 1, 1)][i / 3 + 3]}`) {
-        units = ` ${units}`;
-      }
+      if (!(i === 0 && units !== '')) units += ` ${WORDS[subNum(numStr, i + 1, 1)][i / 3 + 3]}`;
+      if (units === ' ') units = '';
+      if (units !== ` ${WORDS[subNum(numStr, i + 1, 1)][i / 3 + 3]}`) units = ` ${units}`;
 
-      tens = W[subNum(numStr, i + 2, 1)][2];
+      tens = WORDS[subNum(numStr, i + 2, 1)][2];
       if (tens !== '') {
         tens = ` ${tens}`;
       }
     }
 
     hundreds = '';
-    hundreds = W[subNum(numStr, i + 3, 1)][3];
+    hundreds = WORDS[subNum(numStr, i + 3, 1)][3];
     if (hundreds !== '') {
       hundreds = ` ${hundreds}`;
     }
 
-    if (numStr.substr(numStr.length - i - 3, 3) === '000' && units === ` ${W[0][i / 3 + 3]}`) {
+    if (numStr.substr(numStr.length - i - 3, 3) === '000' && units === ` ${WORDS[0][i / 3 + 3]}`) {
       units = '';
     }
 
@@ -89,5 +86,5 @@ function num2str(num) {
   if (words === ' ') {
     return NOL;
   }
-  return words.slice(1);
+  return words.slice(1).trim();
 }
