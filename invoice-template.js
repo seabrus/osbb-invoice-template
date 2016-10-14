@@ -14,9 +14,8 @@ _i.use(i18nBackend)
     initImmediate: false, // this is a key setting for the 'i18next-sync-fs-backend' correct work
     backend: { loadPath: './locales/{{lng}}/{{ns}}.json' },
   },
-  function (err, t) {
-    if (err)
-      console.log('i18next error: ' + err.message);
+  (err) => {
+    if (err) console.log(`i18next error: ${err.message}`);
   });
 
 
