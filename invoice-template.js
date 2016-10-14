@@ -123,8 +123,8 @@ function createInvoicePDF(doc, data) {
   // The invoice date
   moment.locale('uk');
   const curDate = moment().format('LL');
-  const invoiceDate = `${_i.t('vid')} ${_i.t('lapka-l')} ${curDate.slice(0, 2)} ${_i.t('lapka-r')}`
-    + `${curDate.slice(3)}`;
+  const invoiceDate = `${_i.t('vid')} ${_i.t('lapka-l')}${curDate.slice(0, 2)}${_i.t('lapka-r')}`
+    + ` ${curDate.slice(3)}`;
 
   // Total sum
   var totalSum = 0.0;
@@ -250,7 +250,7 @@ function createInvoicePDF(doc, data) {
   str = _i.t('poperedPokaznik');
   doc.text(str, 141, startY, textOptions60);
   str = _i.t('riznitsa');
-  doc.text(str, 198, startY + 2, textOptions60);
+  doc.text(str, 200, startY + 2, textOptions60);
   str = _i.t('summa');
   doc.text(str, 257, startY + 2, textOptions76);
 
@@ -260,7 +260,7 @@ function createInvoicePDF(doc, data) {
     doc.text(services[k].name, 23, currentY);
     doc.text(services[k].nastupPokaznik, 81, currentY, textOptions60);
     doc.text(services[k].poperedPokaznik, 141, currentY, textOptions60);
-    doc.text(services[k].riznitsa, 198, currentY, textOptions60);
+    doc.text(services[k].riznitsa, 200, currentY, textOptions60);
     doc.text(services[k].summa, 257, currentY, textOptions76);
     totalSum += parseFloat(services[k].summa);
   }
@@ -372,7 +372,7 @@ function createInvoicePDF(doc, data) {
   str = _i.t('poperedPokaznikR');
   doc.font('regular').text(str, 472, startYR, textOptions35);
   str = _i.t('riznitsa');
-  doc.font('regular').text(str, 508, startYR + 5, textOptions31);
+  doc.font('regular').text(str, 507, startYR + 5, textOptions31);
   str = _i.t('summaR');
   doc.font('regular').text(str, 537, startYR, textOptions43);
 
