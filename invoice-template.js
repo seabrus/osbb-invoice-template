@@ -30,7 +30,7 @@ const data = {
   "patronomic": "Григорович",
   "surname": "Шевченко",
   "flatNum": "147",
-  "chiefAccounter": "Олена Петрівна Гонтар",
+  "chiefAccounter": "Анастасія Митрофанівна Стромбурлецька-Чорна", // "Олена Петрівна Гонтар",
   "services": [
     {
       "name": "Квартплата",
@@ -134,7 +134,7 @@ function createInvoicePDF(doc, data) {
 
   // Fonts registration
   doc.registerFont('regular', 'fonts/NotoSans-Regular.ttf');
-  doc.registerFont('italic', 'fonts/NotoSans-Italic.ttf');
+  // doc.registerFont('italic', 'fonts/NotoSans-Italic.ttf');
   doc.registerFont('bold', 'fonts/NotoSans-Bold.ttf');
   doc.registerFont('bold-italic', 'fonts/NotoSans-BoldItalic.ttf');
 
@@ -168,7 +168,7 @@ function createInvoicePDF(doc, data) {
   doc.font('regular').text(str, 20, 35, { continued: true });
   doc.font('bold').text(codeEDRPOU);
   doc.lineWidth(1);
-  doc.rect(145, 34, 60, 14).stroke();
+  doc.rect(145, 34, 60, 13).stroke();
 
   // Section "organization name"
   doc.moveDown(1);
@@ -291,7 +291,7 @@ function createInvoicePDF(doc, data) {
   doc.fontSize(9);
   str = `${_i.t('chiefAccounter')}  `;
   doc.font('bold').text(str, { width: 320, continued: true });
-  str = `     ${chiefAccounter}     `;
+  str = ` ${chiefAccounter} `;
   doc.font('regular').text(str, { underline: true });
 
   //
@@ -418,12 +418,23 @@ function createInvoicePDF(doc, data) {
   doc.font('bold').text(str);
 
   // Section "Golovnii Buhgalter"
+/*
   doc.moveDown(2);
   doc.fontSize(9);
   str = `${_i.t('chiefAccounter')}  `;
-  doc.font('bold').text(str, { width: 320, continued: true });
-  str = `   ${chiefAccounter}   `;
+  doc.font('bold').text(str, { width: 223, continued: true });
+  str = ` ${chiefAccounter} `;
   doc.font('regular').text(str, { underline: true });
+*/
+  doc.moveDown(2);
+  doc.fontSize(9);
+  str = `${_i.t('chiefAccounter')}  `;
+  doc.font('bold').text(str);
+  str = ` ${chiefAccounter} `;
+  doc.font('regular').text(str, 357, initYR + (servicesNum * stepYR) + 116,
+    { width: 223, indent: 99, underline: true, align: 'center' });
+//  doc.font('regular').text(str, 357, initYR + (servicesNum * stepYR) + 152,
+//    { width: 223, indent: 99, underline: true, align: 'center' });
 
 }
 
