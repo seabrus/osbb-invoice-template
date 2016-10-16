@@ -8,7 +8,7 @@ const i18nBackend = require('i18next-sync-fs-backend');
 
 // Preload fonts data into Buffers
 var regularBuf = null;
-// var italicBuf = null;
+// var italicBuf = null; // this font isn't used now. It's reserved for possible use in the future
 var boldBuf = null;
 var boldItalicBuf = null;
 try {
@@ -16,8 +16,7 @@ try {
   // italicBuf = fs.readFileSync('fonts/NotoSans-Italic.ttf');
   boldBuf = fs.readFileSync('fonts/NotoSans-Bold.ttf');
   boldItalicBuf = fs.readFileSync('fonts/NotoSans-BoldItalic.ttf');
-}
-catch (e) {
+} catch (e) {
   console.log('createInvoicePDF error: Cannot read font file');
 }
 
