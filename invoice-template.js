@@ -5,7 +5,24 @@ const num2str = require('./convert-num-to-words.js');
 const _i = require('i18next');
 const i18nBackend = require('i18next-sync-fs-backend');
 
-// 'i18next' initialization
+
+// Preload fonts data into Buffers
+var regularBuf = null;
+// var italicBuf = null;
+var boldBuf = null;
+var boldItalicBuf = null;
+try {
+  regularBuf = fs.readFileSync('fonts/NotoSans-Regular.ttf');
+  // italicBuf = fs.readFileSync('fonts/NotoSans-Italic.ttf');
+  boldBuf = fs.readFileSync('fonts/NotoSans-Bold.ttf');
+  boldItalicBuf = fs.readFileSync('fonts/NotoSans-BoldItalic.ttf');
+}
+catch (e) {
+  console.log('createInvoicePDF error: Cannot read font file');
+}
+
+
+// 'i18next' initialization and locale loading
 _i.use(i18nBackend)
   .init({
     // debug: true,
@@ -95,7 +112,7 @@ doc.pipe(upload);
 
 
 function createInvoicePDF(doc, data) {
-  // Check the input data
+  // Check the input data correctness
   const codeEDRPOU = data.codeEDRPOU || '00000000';
   const orgName = data.orgName || _i.t('orgName');
   const orderNum = data.orderNum || '000';
@@ -120,24 +137,31 @@ function createInvoicePDF(doc, data) {
     if (!services[k].summa || !parseFloat(services[k].summa)) services[k].summa = 0;
   }
 
-  // The invoice date
+  // Set the invoice date
   moment.locale('uk');
   const curDate = moment().format('LL');
   const invoiceDate = `${_i.t('vid')} ${_i.t('lapka-l')}${curDate.slice(0, 2)}${_i.t('lapka-r')}`
     + ` ${curDate.slice(3)}`;
 
-  // Total sum
-  var totalSum = 0.0;
-
-  // Auxiliary text buffer
+  // A variable for the Total sum
+  var totalSum = 0.00;
+  // Auxiliary string that is used as a text buffer
   var str = '';
 
   // Fonts registration
-  doc.registerFont('regular', 'fonts/NotoSans-Regular.ttf');
-  // doc.registerFont('italic', 'fonts/NotoSans-Italic.ttf');
-  doc.registerFont('bold', 'fonts/NotoSans-Bold.ttf');
-  doc.registerFont('bold-italic', 'fonts/NotoSans-BoldItalic.ttf');
+  doc.registerFont('regular', regularBuf);
+  // doc.registerFont('italic', italicBuf);
+  doc.registerFont('bold', boldBuf);
+  doc.registerFont('bold-italic', boldItalicBuf);
+  // Previous version: Font registration without Buffers
+    // doc.registerFont('regular', 'fonts/NotoSans-Regular.ttf');
+    // doc.registerFont('italic', 'fonts/NotoSans-Italic.ttf');
+    // doc.registerFont('bold', 'fonts/NotoSans-Bold.ttf');
+    // doc.registerFont('bold-italic', 'fonts/NotoSans-BoldItalic.ttf');
 
+  //
+  // ===== Start drawing =====
+  //
   // Vertical lines and "Linia vidrizu"
   doc.dash(3, { space: 4 });
   doc.moveTo(340, 30).lineTo(340, 400).stroke();
@@ -418,7 +442,7 @@ function createInvoicePDF(doc, data) {
   doc.font('bold').text(str);
 
   // Section "Golovnii Buhgalter"
-/*
+/* // Left-aligned text
   doc.moveDown(2);
   doc.fontSize(9);
   str = `${_i.t('chiefAccounter')}  `;
@@ -426,6 +450,7 @@ function createInvoicePDF(doc, data) {
   str = ` ${chiefAccounter} `;
   doc.font('regular').text(str, { underline: true });
 */
+  // Experimental center-aligned text
   doc.moveDown(2);
   doc.fontSize(9);
   str = `${_i.t('chiefAccounter')}  `;
